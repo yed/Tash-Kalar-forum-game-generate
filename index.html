@@ -1,0 +1,309 @@
+<html>
+<head>
+<title>Tash Kalar - generate new forum game</title>
+</head>
+<body>
+	<h1>Tash Kalar - generate new forum game</h1>
+	<script type="text/javascript">
+		function shuffle(array) {
+			var currentIndex = array.length;
+			var temporaryValue;
+			var randomIndex;
+	
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+	
+				// Pick a remaining element...
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex -= 1;
+				
+				// And swap it with the current element.
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}	
+			return array;
+		};	
+		
+		function printDeck(deck, deckName, startIndex, secondaryIndex) {
+			decksTextarea = document.getElementById("decks");
+			decksTextarea.value += "[b]" + deckName + " deck[/b] [font=courier]\n";
+			var maxLength = 0;
+			for (var i = startIndex; i < deck.length; i++) {
+				if (secondaryIndex) {
+					cardName = deck[i][secondaryIndex];
+				} else {
+					cardName = deck[i];
+				}
+				if (cardName.length > maxLength) {
+					maxLength = cardName.length;
+				}
+			}
+			for (var i = startIndex; i < deck.length; i++) {
+				if (secondaryIndex) {
+					cardName = deck[i][secondaryIndex];
+				} else {
+					cardName = deck[i];
+				}
+				decksTextarea.value += (i - startIndex + 1) + " - [spoiler]";
+				decksTextarea.value += cardName; 
+				for (var j = cardName.length; j < maxLength; j++) {
+					decksTextarea.value += "_";
+				}
+				decksTextarea.value += "[/spoiler]\n";
+			}
+			decksTextarea.value += "[/font]\n";
+		};
+
+		function checkTasks(tasks) {
+			if (tasks[0]["advanced"] || tasks[1]["advanced"] || tasks[2]["advanced"]) {
+				return false;
+			}
+			if ((tasks[0]["type"] == tasks[1]["type"]) && (tasks[1]["type"] == tasks[2]["type"])) {
+				return false;
+			}
+			if ((tasks[0]["type"] == tasks[1]["type"]) && (tasks[1]["type"] == tasks[3]["type"])) {
+				return false;
+			}
+			if ((tasks[0]["type"] == tasks[2]["type"]) && (tasks[2]["type"] == tasks[3]["type"])) {
+				return false;
+			}
+			if ((tasks[1]["type"] == tasks[2]["type"]) && (tasks[2]["type"] == tasks[3]["type"])) {
+				return false;
+			}
+			return true;
+		}
+
+		function generate() {
+			var tasks = [
+				{name: 'Central Dominance', type: 'board', advanced: false},
+				{name: 'Heroic Destruction', type: 'destruction', advanced: false},
+				{name: 'Green Conquest', type: 'colored', advanced: false},
+				{name: 'Red Summoning', type: 'summoning', advanced: false},
+				{name: 'Imprisonment', type: 'relative', advanced: false},
+				{name: 'Diagonals', type: 'board', advanced: true},
+				{name: 'Legendary Summoning', type: 'summoning', advanced: true},
+				{name: 'Red Legends', type: 'colored', advanced: true},
+				{name: 'End of Legends', type: 'destruction', advanced: true},
+				{name: 'Envelopment', type: 'relative', advanced: true},
+			];
+			var highland = [
+				"Wild Eagle",
+				"Dire Wolf",
+				"Clan Axeman",
+				"Ritual Keeper",
+				"Clan Healer",
+				"Eagle Lord",
+				"Wolf Rider",
+				"War Drummer",
+				"Warlord",
+				"Blood Shaman",
+				"War Summoner",
+				"Hill Giant",
+				"Ritual Master",
+				"Legend Slayer",
+				"Mountain Troll",
+				"Hungry Bear",
+				"Werewolf",
+				"Clan Guardian"
+			];
+			var sylvan = [
+				"Sapling",
+				"Kiskin Farseeders",
+				"Charging Buck",
+				"Forest Wardens",
+				"Naiad",
+				"Kiskin Spirit",
+				"Dryad",
+				"Centaur Spearman",
+				"Centaur Chieftain",
+				"Unicorn",
+				"Sylvan Queen",
+				"Sylvan Princess",
+				"Woodland Druid",
+				"Forest Ancient",
+				"Kiskin Leafsplitter",
+				"Kiskin Boughrunner",
+				"Forest Mystic",
+				"Tree Shepherd",
+			];
+			var imperial = [
+				"Swordmaster",
+				"Messenger",
+				"Herald",
+				"Bomb",
+				"Chronicler",
+				"Assassin",
+				"Time Mage",
+				"Summoner",
+				"Hypnotist",
+				"Cannon",
+				"Champion",
+				"Infantry Captain",
+				"Calavary Captain",
+				"Gryphon Rider",
+				"Knight",
+				"High Priestess",
+				"Master of Intrigue",
+				"Gun Tower",
+			];
+			var legends = [
+				"Fire Dragon",
+				"Hell Bull",
+				"Angel Of Death",
+				"The Eldest Tree",
+				"Bone Catapult",
+				"Fire Elemental",
+				"Leviathan",
+				"Two-Headed Dragon",
+				"Earth Elemental",
+				"Time Elemental",
+				"Storm Elemental",
+				"Titan"
+			];
+			var flares = [
+				{ name: "25a", description: "2 upgr: You may do 1 standard leap with one of your common pieces. 5: Gain an action."},
+				{ name: "34a", description: "3 upgr: Place 1 common piece of your color on an empty square. 4: You may do 1 combat move or 2 standard moves, using your non-legendary pieces."},
+				{ name: "54a", description: "5 upgr: Place 1 heroic piece of your color on any empty square. 4: You may do 1 standard move and 1 combat move (in either order), using your common pieces."},
+				{ name: "44a", description: "4 upgr: Place 1 common piece of yor color on any empty square. 4: Place 1 common piece of your color on any empty square."},
+				{ name: "45a", description: "4 upgr: Place 1 common piece of yor color on any empty square. 5: Place 1 common piece of your color on any empty square, or convert 1 common enemy piece to your color."},
+			];
+			
+			decksTextarea = document.getElementById("decks");
+			player1Hand = document.getElementById("player1Hand");
+			player2Hand = document.getElementById("player2Hand");
+			player1NameElem = document.getElementById("player1Name");
+			player1Name = player1NameElem.value;
+			player2NameElem = document.getElementById("player2Name");
+			player2Name = player2NameElem.value;
+		
+			//Print game title
+			decksTextarea.value = "";
+			player1Hand.value = "";
+			player2Hand.value = "";
+
+			if (!player1Name || !player2Name) {
+				player1Hand.value = "Player name is missing!";
+				return;
+			}
+			decksTextarea.value = "[b]Tash-Kalar[/b] game between [b]" + 
+				player1Name + "[/b] and [b]" + player2Name + "[/b]";
+
+			do {
+				shuffle(tasks);	
+			} while (!checkTasks(tasks));
+			shuffle(legends);
+			shuffle(flares);
+
+
+			decksTextarea.value += "[b]Current Tasks[/b]: " +  
+				tasks[0]["name"] + ", " + tasks[1]["name"] + ", " + tasks[2]["name"] + "\n";
+			decksTextarea.value += "[b]Next task[/b]: " + tasks[3]["name"] + "\n\n";
+			
+			decksTextarea.value += "For cards in your hand check private message from poster of this topic\n\n"; 
+			
+			// Print Player 1 hand and deck
+
+			player1SylvanElem = document.getElementById("player1Sylvan");
+			player1Sylvan = player1SylvanElem.checked;
+			player1HighlandElem = document.getElementById("player1Highland");
+			player1Highland = player1HighlandElem.checked;
+			player1ImperialElem = document.getElementById("player1Imperial");
+			player1Imperial = player1ImperialElem.checked;
+
+			player1Hand.value = "Tash-Kalar [b]" + player1Name + "[/b] vs [b]" + player2Name + "[/b]:\n\n";
+			player1Hand.value += "[b]" + player1Name + "[/b]'s hand:\n";
+			if (player1Imperial) {
+				shuffle(imperial);
+				player1Hand.value += "Imperial: [b]" + 
+					imperial[0] + "[/b], [b]" + imperial[1] + "[/b], [b]" + imperial[2] + "[/b]";
+				printDeck(imperial, player1Name + "'s Imperial", 3, null);
+					
+			}
+			if (player1Highland) {
+				shuffle(highland);
+				player1Hand.value += "Highland: [b]" + 
+					highland[0] + "[/b], [b]" + highland[1] + "[/b], [b]"
+					+ highland[2] + "[/b]\n";
+				printDeck(highland, player1Name + "'s Highland", 3, null);
+					
+			}
+			if (player1Sylvan) {
+				shuffle(sylvan);
+				player1Hand.value += "Sylvan: [b]" + 
+					sylvan[0] + "[/b], [b]" + sylvan[1] + "[/b], [b]" + sylvan[2] + "[/b]\n";
+				printDeck(sylvan, player1Name + "'s Sylvan", 3, null);
+			}
+			player1Hand.value += "\nLegends: [b]" + legends[0] + "[/b], [b]" + legends[1] + "[/b]\n";
+			player1Hand.value += "\nFlare: " + flares[0]["name"] + " = [b]" 
+				+ flares[0]["description"] + "[/b]";
+
+			// Print Player 2 hand and deck
+
+			player2SylvanElem = document.getElementById("player2Sylvan");
+			player2Sylvan = player2SylvanElem.checked;
+			player2HighlandElem = document.getElementById("player2Highland");
+			player2Highland = player2HighlandElem.checked;
+			player2ImperialElem = document.getElementById("player2Imperial");
+			player2Imperial = player2ImperialElem.checked;
+
+			player2Hand.value = "Tash-Kalar [b]" + player1Name + "[/b] vs [b]" + player2Name + "[/b]:\n\n";
+			player2Hand.value += "[b]" + player2Name + "[/b]'s hand:\n";
+			if (player2Imperial) {
+				shuffle(imperial);
+				player2Hand.value += "Imperial: [b]" + 
+					imperial[0] + "[/b], [b]" + imperial[1] + "[/b], [b]" + imperial[2] + "[/b]";
+				printDeck(imperial, player2Name + "'s Imperial", 3, null);
+					
+			}
+			if (player2Highland) {
+				shuffle(highland);
+				player2Hand.value += "Highland: [b]" + 
+					highland[0] + "[/b], [b]" + highland[1] + "[/b], [b]"
+					+ highland[2] + "[/b]\n";
+				printDeck(highland, player2Name + "'s Highland", 3, null);
+					
+			}
+			if (player2Sylvan) {
+				shuffle(sylvan);
+				player2Hand.value += "Sylvan: [b]" + 
+					sylvan[0] + "[/b], [b]" + sylvan[1] + "[/b], [b]" + sylvan[2] + "[/b]\n";
+				printDeck(sylvan, player2Name + "'s Sylvan", 3, null);
+			}
+			player2Hand.value += "\nLegends: [b]" + legends[2] + "[/b], [b]" + legends[3] + "[/b]\n";
+			player2Hand.value += "\nFlare: " + flares[1]["name"] + " = [b]" 
+				+ flares[0]["description"] + "[/b]";
+
+			//Print legends deck
+			printDeck(legends, "Legends", 4, null);
+		
+			//Print Flares legend and deck
+			decksTextarea.value += "[b]Flares legend[/b]\n";
+			for (var i = 0; i < flares.length; i++) {
+				decksTextarea.value += flares[i]["name"] + " = " + flares[i]["description"] + "\n";
+			}
+			printDeck(flares, "Flares", 2, "name");
+			
+			//Print Task deck
+			printDeck(tasks, "Tasks", 4, "name");
+			
+		};
+	</script>
+	Player 1:
+	<input type="text" id="player1Name">
+	<input type="radio" name="player1School" id="player1Imperial" checked="checked">Imperial
+	<input type="radio" name="player1School" id="player1Highland">Highland
+	<input type="radio" name="player1School" id="player1Sylvan">Sylvan<br>
+	Player 2:
+	<input type="text" id="player2Name">
+	<input type="radio" name="player2School" id="player2Imperial" checked="checked">Imperial
+	<input type="radio" name="player2School" id="player2Highland">Highland
+	<input type="radio" name="player2School" id="player2Sylvan">Sylvan<br>
+	<input type="submit" value="Generate" onclick="generate()"><br><hr>
+	Player 1 hand: <i>send to him by <a href="http://forum.dominionstrategy.com/index.php?action=pm;sa=send">private message</a></i><br><textarea cols="60" rows="5" id="player1Hand"></textarea><br>
+	Player 2 hand: <i>send to him by <a href="http://forum.dominionstrategy.com/index.php?action=pm;sa=send">private message</a></i><br><textarea cols="60" rows="5" id="player2Hand"></textarea><br>
+	Decks: <i>create new forum topic in <a href="http://forum.dominionstrategy.com/index.php?board=41.0">Non-Mafia Game Threads</a></i><br>
+	<textarea id="decks" cols="60" rows="10"></textarea><br>
+
+</body>
+</html>
