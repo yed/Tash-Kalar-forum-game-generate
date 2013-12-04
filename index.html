@@ -211,7 +211,7 @@
 				return;
 			}
 			decksTextarea.value = "[b]Tash-Kalar[/b] game between [b]" + 
-				player1Name + "[/b] and [b]" + player2Name + "[/b]";
+				player1Name + "[/b] and [b]" + player2Name + "[/b]\n\n";
 
 			do {
 				shuffle(tasks);	
@@ -223,6 +223,8 @@
 			decksTextarea.value += "[b]Current Tasks[/b]: " +  
 				tasks[0]["name"] + ", " + tasks[1]["name"] + ", " + tasks[2]["name"] + "\n";
 			decksTextarea.value += "[b]Next task[/b]: " + tasks[3]["name"] + "\n\n";
+			
+			decksTextarea.value += "Now create a copy of [url=https://docs.google.com/spreadsheet/ccc?key=0AjFvlzoTdhK4dDR1LW5TbkgwSzFDZDJCaGdNSFp6MVE#gid=0]Google Sheet with clean board[/url] and set permissions to write for everybody with link.\n\n"; 
 			
 			decksTextarea.value += "For cards in your hand check private message from poster of this topic\n\n"; 
 			
