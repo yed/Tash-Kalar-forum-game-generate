@@ -177,7 +177,7 @@
 				"Storm Elemental",
 				"Titan"
 			];
-			var flares = [
+			var sortedFlares = [
 				{ name: "25a", description: "2 upgr: You may do 1 standard leap with one of your common pieces. 5: Gain an action."},
 				{ name: "34a", description: "3 upgr: Place 1 common piece of your color on an empty square. 4: You may do 1 combat move or 2 standard moves, using your non-legendary pieces."},
 				{ name: "36a", description: "3 upgr: Place 1 common piece of your color on any empty square. 6: Place 1 common piece of your color on any empty square."},
@@ -192,6 +192,14 @@
 				//{ name: "5??", description: "5 upgr: Place 2 common pieces of your color on empty square. ?"},
 
 			];
+
+			//Shuffle common decks
+			var flares = sortedFlares.slice();
+			shuffle(flares);
+			do {
+				shuffle(tasks);	
+			} while (!checkTasks(tasks));
+			shuffle(legends);
 			
 			decksTextarea = document.getElementById("decks");
 			player1Hand = document.getElementById("player1Hand");
@@ -213,11 +221,6 @@
 			decksTextarea.value = "[b]Tash-Kalar[/b] game between [b]" + 
 				player1Name + "[/b] and [b]" + player2Name + "[/b]\n\n";
 
-			do {
-				shuffle(tasks);	
-			} while (!checkTasks(tasks));
-			shuffle(legends);
-			shuffle(flares);
 
 
 			decksTextarea.value += "[b]Current Tasks[/b]: " +  
@@ -305,8 +308,8 @@
 		
 			//Print Flares legend and deck
 			decksTextarea.value += "[b]Flares legend[/b]\n";
-			for (var i = 0; i < flares.length; i++) {
-				decksTextarea.value += flares[i]["name"] + " = " + flares[i]["description"] + "\n";
+			for (var i = 0; i < sortedFlares.length; i++) {
+				decksTextarea.value += sortedFlares[i]["name"] + " = " + sortedFlares[i]["description"] + "\n";
 			}
 			printDeck(flares, "Flares", 2, "name");
 			
