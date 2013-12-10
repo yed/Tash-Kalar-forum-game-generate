@@ -51,16 +51,16 @@ $( document ).ready(function() {
 	<div>
 				<a class="flareLink" href="#" name="flare25a">25a</a>
 				<a class="flareLink" href="#" name="flare34a">34a</a>
+				<a class="flareLink" href="#" name="flare35a">35a</a>
 				<a class="flareLink" href="#" name="flare36a">36a</a>
 				<!-- <a class="flareLink" href="#" name="flare36b">36b</a> -->
-				<!-- <a class="flareLink" href="#" name="flare3??">3??</a> -->
 				<a class="flareLink" href="#" name="flare44a">44a</a>
 				<a class="flareLink" href="#" name="flare44b">44b</a>
 				<a class="flareLink" href="#" name="flare45a">45a</a>
 				<a class="flareLink" href="#" name="flare45b">45b</a>
 				<a class="flareLink" href="#" name="flare46a">46a</a>
 				<a class="flareLink" href="#" name="flare54a">54a</a>
-				<!--<a class="flareLink" href="#" name="flare5??"</a>-->
+				<a class="flareLink" href="#" name="flare55a">55a</a>
 	</div>
 	<b onclick="$('.deck').hide(); $('#empireBlue').show()">Empire (Blue)</b>
 	<b onclick="$('.deck').hide(); $('#empireRed').show()">Empire (Red)</b>
@@ -157,18 +157,18 @@ $( document ).ready(function() {
 			3 upg: Place 1 common piece of your color on an empty square.<br />
 			4 all: You may do 1 combat move or 2 standard moves, using your non-legendary pieces.
 		</div>
+		<div class="flare" id="flare35a" style="display:none">
+			3 upg: You may do up to 3 standard moves, using your common pieces.<br />
+			5 all: Gain an action.
+		</div>
 		<div class="flare" id="flare36a" style="display:none">
 			3 upg: Place 1 common piece of your color on any empty square.<br />
-			6 all: Place 1 common piece of your color on any empty square.
+			6 all: Place 1 heroic piece of your color on any empty square.
 		</div>
 		<!-- 
 		<div class="flare" id="flare36b" style="display:none">
 			3 upg: Do 1 standard move with one of your common pieces, or upgrade 1 of your common pieces.<br />
 			6 all: ?
-		</div>
-		<div class="flare" id="flare3??" style="display:none">
-			3 upg: You may do up to 3 standard moves, using your common pieces.<br />
-			? all: ?
 		</div>
 		-->
 		<div class="flare" id="flare44a" style="display:none">
@@ -195,12 +195,10 @@ $( document ).ready(function() {
 			5 upg: Place 1 heroic piece of your color on any empty square.<br />
 			4 all: You may do 1 standard move and 1 combat move (in either order), using your common pieces.
 		</div>
-		<!--
-		<div class="flare" id="flare5??" style="display:none">
+		<div class="flare" id="flare55a" style="display:none">
 			5 upg: Place 2 common pieces of your color on empty square.<br />
-			? all: ?
+			5 all: Place 1 common piece of your color on any empty square.
 		</div>
-		-->
 	</div>
 	<div id="hand"></div>
 
