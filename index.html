@@ -270,12 +270,23 @@
 				return;
 			}
 
+			if (highForm) {
+				typeTitle = "High Form";
+				sheetUrl = "https://docs.google.com/spreadsheet/ccc?key=0AjFvlzoTdhK4dDR1LW5TbkgwSzFDZDJCaGdNSFp6MVE#gid=0";
+			} else if (melee) {
+				typeTitle = "Deathmatch Melee";
+				sheetUrl = "https://docs.google.com/spreadsheet/ccc?key=0AjFvlzoTdhK4dHQtMHl6NjRZdDNpamZ4ZXhkYmRORWc#gid=0";
+			} else { // detchmatch duel
+				typeTitle = "Deathmatch Duel";
+				sheetUrl = "https://docs.google.com/spreadsheet/ccc?key=0AjFvlzoTdhK4dHhmQzdyeFBybzVsaEh6OFFYbGVMNkE#gid=0";
+			}
+			
 
-			var title = "[b]Tash-Kalar[/b] game between ";
+			var title = "[b]Tash-Kalar " + typeTitle + "[/b] game between ";
 
 			//Print game title
 			for (var i = 0; i < 4; i++) {
-				title += "[b]" +  playerNames[i] + "[/b],";
+				title += "[b]" +  playerNames[i] + "[/b], ";
 			}
 			decksTextarea.value += title;
 			decksTextarea.value += "\n\n";
@@ -285,8 +296,9 @@
 			decksTextarea.value += "[b]Current Tasks[/b]: " +  
 				tasks[0]["name"] + ", " + tasks[1]["name"] + ", " + tasks[2]["name"] + "\n";
 			decksTextarea.value += "[b]Next task[/b]: " + tasks[3]["name"] + "\n\n";
-			
-			decksTextarea.value += "Now create a copy of [url=https://docs.google.com/spreadsheet/ccc?key=0AjFvlzoTdhK4dDR1LW5TbkgwSzFDZDJCaGdNSFp6MVE#gid=0]Google Sheet with clean board[/url] and set permissions to write for everybody with link.\n\n"; 
+
+			decksTextarea.value += "Now create a copy of [url=" + sheetUrl + 
+				"]Google Sheet with clean board[/url] and set permissions to write for everybody with link.\n\n"; 
 			
 			decksTextarea.value += "For cards in your hand check private message from poster of this topic.\n\n"; 
 			
@@ -353,9 +365,9 @@
 	<input type="radio" name="player4School" id="player4Imperial" checked="checked">Imperial
 	<input type="radio" name="player4School" id="player4Highland">Highland
 	<input type="radio" name="player4School" id="player4Sylvan">Sylvan<br>
-	<input type="radio" name="gameForm" id="highForm" checked="checked">2 or 4 player high form<br>
-	<input type="radio" name="gameForm" id="duel">2 or 4 player deathmatch duel<br>
-	<input type="radio" name="gameForm" id="melee">3 or 4 player deathmatch melee<br>
+	<input type="radio" name="gameForm" id="highForm" checked="checked">2 or 4 player High Form<br>
+	<input type="radio" name="gameForm" id="duel">2 or 4 player Deathmatch Duel<br>
+	<input type="radio" name="gameForm" id="melee">3 or 4 player Deathmatch Melee<br>
 	<input type="submit" value="Generate" onclick="generate()"><br><hr>
 	<i>Single click to textarea selects all texts in it.</i><br>
 	<b>Player 1</b> hand: <i>send to him by <a href="http://forum.dominionstrategy.com/index.php?action=pm;sa=send">private message</a></i><br><textarea onclick="this.select()" cols="60" rows="5" id="player1Hand"></textarea><br>
