@@ -116,7 +116,7 @@
 				playerHand.value += "\nLegends: [b]" + legends[(order - 1) * 2] + "[/b], [b]" + legends[(order - 1) * 2 + 1] + "[/b]\n";
 			}
 			playerHand.value += "\nFlare: " + flares[order - 1]["name"] + " = [b]" 
-				+ flares[order]["description"] + "[/b]";
+				+ flares[order - 1]["description"] + "[/b]";
 		}
 
 		function generate() {
