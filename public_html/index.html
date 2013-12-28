@@ -286,7 +286,12 @@
 
 			//Print game title
 			for (var i = 0; i < 4; i++) {
-				title += "[b]" +  playerNames[i] + "[/b], ";
+				if (playerNames[i]) {
+					if (i != 0) {
+						title += ", ";
+					}
+					title += "[b]" +  playerNames[i] + "[/b]";
+				}
 			}
 			decksTextarea.value += title;
 			decksTextarea.value += "\n\n";
