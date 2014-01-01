@@ -4,18 +4,56 @@
 <title>Tash Kalar - display your hand</title>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script type="text/javascript">
+
+function getPreviousHash() {
+	var matches;
+	if (matches = (document.location + '').match(/#.*$/)) {
+		return matches[0];
+	} else {
+		return '#';
+	}
+}
+
+function removeFromUrl(toRemove) {
+	var previousHash = getPreviousHash();
+	document.location = previousHash.replace(toRemove, '');
+}
+
+function removeFlareFromUrl() {
+	var previousHash = getPreviousHash();
+	document.location = previousHash.replace(/&flare.../, '');
+}
+
+function addCard(url) {
+	$('#hand').append('<span onclick="$(this).remove(); removeFromUrl(\'&'+ encodeURIComponent(url) +'\');" class="card"><img src="' + url + '"></span>');
+}
+
 $( document ).ready(function() {
+
+	var previousHash = getPreviousHash();
+	var adds = previousHash.substr(1).split('&');
+	for (i = 0; i < adds.length; ++i) {
+		if (adds[i].match(/flare/)) {
+			$('#' + adds[i]).show();
+		} else {
+			addCard(decodeURIComponent(adds[i]));
+		}
+	}
+
 	$('.cardLink').click(function() {
-		$('#hand').append('<span onclick="$(this).remove();" class="card"><img src="' + this.href + '"></span>');
+		document.location = getPreviousHash() + '&' + encodeURIComponent(this.href);
+		addCard(this.href);
 		return false;
 	});
 	$('.flare').click(function() {
 		$(this).hide();
+		removeFlareFromUrl();
 		return false;
 	});
 	$('.flareLink').click(function() {
 		$('.flare').hide();
-		console.log(this.name);
+		removeFlareFromUrl();
+		document.location = getPreviousHash() + '&' + this.name; 
 		$('#' + this.name).show();
 		return false;
 	});
